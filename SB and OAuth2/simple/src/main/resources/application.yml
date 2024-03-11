@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: simple
+
+
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            clientId: fc0c6ddb43a747f5b342
+            clientSecret: 01e14ac7eda18b03b0d3479c14209490f7cc27e7
+# ...
+
+logging:
+  level:
+    org.springframework.security: DEBUG

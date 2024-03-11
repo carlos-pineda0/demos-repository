@@ -1,5 +1,6 @@
 package com.example.contractrestclient;
 
+import org.assertj.core.api.BDDAssertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.contract.stubrunner.spring.AutoConfigureStubRunner;
@@ -14,21 +15,21 @@ import static org.assertj.core.api.BDDAssertions.then;
 		ids = "com.example:contract-rest-service:0.0.1-SNAPSHOT:stubs:8100",
 		stubsMode = StubRunnerProperties.StubsMode.LOCAL
 )
-class ContractRestClientApplicationTests {
+public class ContractRestClientApplicationTest {
 
 	@Test
 	public void get_person_from_service_contract() {
+		// given:
 		RestTemplate restTemplate = new RestTemplate();
 
+		// when:
 		ResponseEntity<Person> personResponseEntity = restTemplate.getForEntity("http://localhost:8100/person/1", Person.class);
 
-		then(
-				personResponseEntity.getStatusCode()
-		).isEqualTo(200);
+		// then:
+		BDDAssertions.then(personResponseEntity.getStatusCodeValue()).isEqualTo(200);
+		BDDAssertions.then(personResponseEntity.getBody().getId()).isEqualTo(1L);
+		BDDAssertions.then(personResponseEntity.getBody().getName()).isEqualTo("foo");
+		BDDAssertions.then(personResponseEntity.getBody().getSurname()).isEqualTo("bee");
 
-		then(personResponseEntity.getBody().getId()).isEqualTo(11);
-		then(personResponseEntity.getBody().getName()).isEqualTo("foo");
-		then(personResponseEntity.getBody().getSurname()).isEqualTo("bee");
 	}
-
 }

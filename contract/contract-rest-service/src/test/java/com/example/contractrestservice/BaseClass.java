@@ -10,20 +10,15 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 @SpringBootTest(classes = ContractRestServiceApplication.class)
 public abstract class BaseClass {
 
-    @Autowired
-    PersonRestController personRestController;
+    @Autowired PersonRestController personRestController;
 
-    @MockBean
-    PersonService personService;
+    @MockBean PersonService personService;
 
-    @BeforeEach
-    public void setup() {
+    @BeforeEach public void setup() {
         RestAssuredMockMvc.standaloneSetup(personRestController);
 
-        Mockito.when(
-                personService.findPersonById(1L)
-        ).thenReturn(
-                new Person(1L, "foo", "bee")
-        );
+        Mockito.when(personService.findPersonById(1L))
+                .thenReturn(new Person(1L, "foo", "bee"));
     }
+
 }
